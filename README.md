@@ -1,5 +1,7 @@
 # ⭐ Star Credibility
 
+[![Star on GitHub](https://img.shields.io/github/stars/iamrajhans/star-cred?style=social)](https://github.com/iamrajhans/star-cred)
+
 A 100% client-side dashboard that analyzes a GitHub repository's **stargazers** and
 produces a **credibility score (0–100)** — answering the question: *how many of these
 stars come from real, active developers vs. new, inactive, or bot-like accounts?*
@@ -8,6 +10,8 @@ No backend. Your GitHub token stays in your browser and talks directly to the Gi
 API. Deployed as a static site on GitHub Pages.
 
 **▶ Live demo: <https://iamrajhans.github.io/star-cred/>**
+
+> ⭐ **Find this useful? [Star the repo](https://github.com/iamrajhans/star-cred)** — then run star-cred on it. 😉
 
 <!-- Add a screenshot at docs/screenshot.png, then uncomment the line below:
 ![Star Credibility dashboard](docs/screenshot.png)
@@ -112,3 +116,8 @@ npm run build    # production build into dist/
 - **Suspended/deleted accounts** are skipped (GitHub returns them as null nodes).
 - **Future upgrade:** a real "Login with GitHub" OAuth flow would require a small CORS
   proxy (GitHub Pages can't safely hold an OAuth secret), so the PAT flow is used instead.
+
+---
+
+If star-cred helped you trust (or question) a repo's stars, consider giving it one of
+your own — [⭐ Star on GitHub](https://github.com/iamrajhans/star-cred).
