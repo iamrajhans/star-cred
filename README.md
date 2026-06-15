@@ -7,6 +7,12 @@ stars come from real, active developers vs. new, inactive, or bot-like accounts?
 No backend. Your GitHub token stays in your browser and talks directly to the GitHub
 API. Deployed as a static site on GitHub Pages.
 
+**▶ Live demo: <https://iamrajhans.github.io/star-cred/>**
+
+<!-- Add a screenshot at docs/screenshot.png, then uncomment the line below:
+![Star Credibility dashboard](docs/screenshot.png)
+-->
+
 ## What it does
 
 For a repo (`owner/name`) it fetches stargazers (most recently starred first) via the
@@ -24,6 +30,41 @@ each into:
 It then computes an aggregate credibility score, detects **suspicious star spikes**
 (clusters of stars in a short window dominated by new/fake accounts), and explains the
 result in plain language.
+
+## How it works
+
+```mermaid
+flowchart LR
+  A[Paste repo URL] --> B[PAT from localStorage]
+  B --> C["GraphQL page 1<br/>(total + cursor format)"]
+  C --> D{Offset cursors?}
+  D -- yes --> E["Fan out pages<br/>(6 concurrent)"]
+  D -- no --> F[Sequential paginate]
+  E --> G[Score each stargazer]
+  F --> G
+  G --> H[Bucket into 5 categories]
+  H --> I["Aggregate 0-100 score<br/>+ spike detection"]
+  I --> J["Donut + reasoning<br/>+ virtualized user list"]
+```
+
+Per-user scoring blends five weighted signals into a 0–100 score and a category:
+
+```mermaid
+flowchart TD
+  U[Stargazer] --> S1[Account age]
+  U --> S2[Last-push recency]
+  U --> S3[Public repos]
+  U --> S4[Followers]
+  U --> S5[Profile completeness]
+  S1 --> W[Weighted 0-100 score]
+  S2 --> W
+  S3 --> W
+  S4 --> W
+  S5 --> W
+  U --> C[Category bucket]
+  W --> AGG[Repo credibility + breakdown]
+  C --> AGG
+```
 
 ## Scoring signals
 
